@@ -1,0 +1,49 @@
+from connection import connection
+from PyQt6 import QtWidgets
+from pymysql import connect
+
+app = QtWidgets.QApplication([])
+window = QtWidgets.QWidget()
+
+window.resize(900,500)
+window.setMinimumSize(400,200)
+window.setMaximumSize(1000,1000)
+
+input_text = QtWidgets.QLineEdit(window)
+input_text.move(10,10)
+
+input_text.setPlaceholderText("Digite seu nome")
+
+def onClick():
+    cursor = connection
+    texto = input_text.text()
+    sql = "INSERT INTO usuarios (nome) VALUES (%(nome)s)"
+    cursor.execute(sql, {'nome': texto})
+    connection.commit()
+    print(texto)
+
+button = QtWidgets.QPushButton("Clique para enviar", window)
+button.clicked.connect(onClick)
+button.move(10, 40)
+
+
+input_text2 = QtWidgets.QLineEdit(window)
+input_text2.move(10,70)
+
+input_text2.setPlaceholderText("Digite sua idade")
+
+def onClick():
+    cursor = connect
+    texto = input_text2.text()
+    sql = "INSERT INTO usuarios (idade) VALUES (%(idade)s)"
+    cursor.execute(sql, {'idade': texto})
+    connection.commit()
+    print(texto)
+
+button = QtWidgets.QPushButton("Clique para enviar", window)
+button.clicked.connect(onClick)
+button.move(10, 100)
+
+
+window.show()
+app.exec()
